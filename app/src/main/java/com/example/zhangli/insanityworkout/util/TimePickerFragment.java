@@ -1,4 +1,4 @@
-package com.example.zhangli.insanityworkout;
+package com.example.zhangli.insanityworkout.util;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -10,17 +10,22 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.zhangli.insanityworkout.R;
+import com.example.zhangli.insanityworkout.activity.DayContent;
+import com.example.zhangli.insanityworkout.activity.MainActivity;
+import com.example.zhangli.insanityworkout.db.InsanityDB;
+
 import java.util.Calendar;
 
 public class TimePickerFragment extends DialogFragment implements
         TimePickerDialog.OnTimeSetListener {
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-
         return new TimePickerDialog(getActivity(), this, hour, minute,
                 DateFormat.is24HourFormat(getActivity()));
     }

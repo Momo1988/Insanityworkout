@@ -1,4 +1,4 @@
-package com.example.zhangli.insanityworkout;
+package com.example.zhangli.insanityworkout.util;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

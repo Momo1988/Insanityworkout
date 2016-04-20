@@ -1,11 +1,12 @@
-package com.example.zhangli.insanityworkout;
+package com.example.zhangli.insanityworkout.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import com.example.zhangli.insanityworkout.util.ActivityCollector;
 
 /**
  * Created by zhangli on 16/4/19.

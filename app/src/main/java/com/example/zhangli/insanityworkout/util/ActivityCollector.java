@@ -1,4 +1,4 @@
-package com.example.zhangli.insanityworkout;
+package com.example.zhangli.insanityworkout.util;
 
 import android.app.Activity;
 

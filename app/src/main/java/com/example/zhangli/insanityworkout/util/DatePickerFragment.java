@@ -1,4 +1,4 @@
-package com.example.zhangli.insanityworkout;
+package com.example.zhangli.insanityworkout.util;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TextView;
+
+import com.example.zhangli.insanityworkout.R;
 
 import java.util.Calendar;
 

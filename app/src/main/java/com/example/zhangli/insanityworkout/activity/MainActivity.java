@@ -1,19 +1,23 @@
-package com.example.zhangli.insanityworkout;
+package com.example.zhangli.insanityworkout.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.example.zhangli.insanityworkout.db.InsanityDB;
+import com.example.zhangli.insanityworkout.db.InsanityDatabaseHelper;
+import com.example.zhangli.insanityworkout.R;
+import com.example.zhangli.insanityworkout.db.ItemData;
+import com.example.zhangli.insanityworkout.util.SectionsPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,25 +40,21 @@ public class MainActivity
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private MyDatabaseHelper dbHelper;
-    private Cursor cursor;
+    private InsanityDB insanityDB;
+    private List<ItemData> itemDatalist;
 
-    ArrayList<HashMap<String, Object>> listItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
+        InsanityDB.getInstance(this).loadItemData();
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         assert mViewPager != null;
         mViewPager.setAdapter(adapter);
 
-        dbHelper = new MyDatabaseHelper(this, "workout.db", null,1);
-        if (dbHelper.isexist()){dbHelper.initdb();}
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -89,17 +89,15 @@ public class MainActivity
              case R.id.GridView:
                  //item.setIntent(new Intent(this,DayContent.class));
              case R.id.ListView:
-                 item.setIntent(new Intent(this,DayContent.class));
+
              default:
          }
         return super.onOptionsItemSelected(item);
     }
 
 
-    /**
-     * 初始化控件，初始化Fragment
-     */
-
-
+    public List<ItemData> getItemDatalist(){
+        return itemDatalist;
+    }
 
 }

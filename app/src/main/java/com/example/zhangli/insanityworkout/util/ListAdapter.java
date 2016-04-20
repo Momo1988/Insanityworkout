@@ -1,4 +1,4 @@
-package com.example.zhangli.insanityworkout;
+package com.example.zhangli.insanityworkout.util;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -10,8 +10,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.zhangli.insanityworkout.R;
+import com.example.zhangli.insanityworkout.db.ItemData;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by zhangli on 16/4/9.
@@ -20,21 +24,19 @@ import java.util.HashMap;
     public class ListAdapter extends BaseAdapter {
 
         private LayoutInflater mInflater = null;
-        private Context mContext;
-        private ArrayList<HashMap<String, Object>> listItem;
-        int[] days = {28,7,28};
+        private   List<ItemData>  listItem;
+
 
         class ViewHolder {
             public TextView day;
             public TextView content;
-            public int  _id;
+            public int  id;
         }
 
-        public ListAdapter(Context context, ArrayList<HashMap<String, Object>>  listItem0){
+        public ListAdapter(Context context,List<ItemData> listItem0){
             super();
             mInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mContext = context;
             listItem = listItem0;
         }
 
@@ -71,19 +73,10 @@ import java.util.HashMap;
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.day.setText(listItem.get(position).get("day").toString());
-            holder.content.setText(listItem.get(position).get("content").toString());
-                    holder.content.setTextColor(Color.argb(127, 255, 0, 255));
-
-
-
-
-           /* Log.d("aaa", "" + getCount() + cursor.moveToPosition(position) + position+"  "+fragment);
-
-            holder.day.setText(dbHelper.getday(cursor));
-            holder.content.setText(dbHelper.getcontent(cursor));
-            holder.content.setTextColor(Color.argb(127, 255, 0, 255));
-*/
+            holder.day.setText(listItem.get(position).getDay());
+            holder.content.setText(listItem.get(position).getContent());
+            if (listItem.get(position).getIscomplete()=="1"){
+                    holder.content.setTextColor(Color.argb(127, 255, 0, 255));}
             return convertView;
         }
 

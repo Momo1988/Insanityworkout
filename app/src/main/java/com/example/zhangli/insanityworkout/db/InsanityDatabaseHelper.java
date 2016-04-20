@@ -1,4 +1,4 @@
-package com.example.zhangli.insanityworkout;
+package com.example.zhangli.insanityworkout.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,27 +8,21 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 
 /**
  * Created by zhangli on 16/4/17.
- */public class MyDatabaseHelper extends SQLiteOpenHelper {
+ */public class InsanityDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_Workout = "create table IF NOT EXISTS workout ("
-            + "_id integer primary key autoincrement, "
+            + "id integer primary key autoincrement, "
             + "content text, "
             + "day text, "
-            + "iscomplete bit DEFAULT 0,"
-            + "completetime text default null"
+            + "iscomplete bit DEFAULT '0',"
+            + "time text default '0000'"
             + ")"; //就是bit类型的 .-1代表true 0 代表false
 
     private Context mContext;
-    private static final String DATABASE_NAME="workout.db";//数据库名称
-    private static final int SCHEMA_VERSION=2;//版本号,则是升级之后的,升级方法请看onUpgrade方法里面的判断
-
-    public MyDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory
+    public InsanityDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory
             factory, int version) {//构造函数,接收上下文作为参数,直接调用的父类的构造函数
         super(context, name, factory, version);
         mContext = context;
@@ -126,7 +120,7 @@ import java.util.HashMap;
         cv.put("completetime", completetime);
         // cv.put("phone", phone);
 
-        getWritableDatabase().update("workout", cv, "_ID=?",
+        getWritableDatabase().update("workout", cv, "ID=?",
                 args);
         //getWritableDatabase().close();
     }
@@ -170,8 +164,8 @@ import java.util.HashMap;
                 {0, 0, 0, 0, 0, 0, 1},
                 {0, 1, 2, 3, 4, 1, 5, 2, 4, 1, 3, 6, 7, 5, 0, 1, 6, 3, 4, 7, 5, 1, 6, 4, 7, 1, 6, 8}};
 
-       MyDatabaseHelper dbHelper;
-        dbHelper = new MyDatabaseHelper(mContext, "workout.db", null,1);
+       InsanityDatabaseHelper dbHelper;
+        dbHelper = new InsanityDatabaseHelper(mContext, "workout.db", null,1);
 
         int[] countn = {0, 28, 35};
         for (int id = 0; id < 3; id++) {
