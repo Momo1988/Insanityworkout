@@ -2,7 +2,9 @@ package com.example.zhangli.insanityworkout.util;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -19,6 +21,8 @@ import com.example.zhangli.insanityworkout.activity.DayContent;
 import com.example.zhangli.insanityworkout.activity.MainActivity;
 import com.example.zhangli.insanityworkout.db.InsanityDatabaseHelper;
 import com.example.zhangli.insanityworkout.db.ItemData;
+import com.example.zhangli.insanityworkout.db.Workout;
+import com.example.zhangli.insanityworkout.model.MyApplication;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,10 +38,10 @@ public class PlaceholderFragment extends Fragment {
      */
 
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private static final String TAG = "PlaceholderFragment";
     private ListAdapter adapter;
-    int[] ind1 = {0,28,35};
-    int[] ind2 = {28,35,62};
-    List<ItemData> ll;
+    List<ItemData> itemDatalist;
+
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -51,7 +55,7 @@ public class PlaceholderFragment extends Fragment {
     }
 
     public static PlaceholderFragment newcolor(int color) {
-        int[] colorall= {Color.argb(127,0,255,255),Color.argb(127,255,0,255),Color.argb(127,255,255,0)};
+        int[] colorall = {Color.argb(127, 0, 255, 255), Color.argb(127, 255, 0, 255), Color.argb(127, 255, 255, 0)};
         PlaceholderFragment fragment = new PlaceholderFragment();
         Bundle args = new Bundle();
         args.putInt("ARG_color", colorall[color]);
@@ -59,7 +63,7 @@ public class PlaceholderFragment extends Fragment {
         return fragment;
     }
 
-    public static PlaceholderFragment newFragment(int sectionNumber){
+    public static PlaceholderFragment newFragment(int sectionNumber) {
         PlaceholderFragment fragment = new PlaceholderFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -70,9 +74,9 @@ public class PlaceholderFragment extends Fragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    Log.d("debug","oncreate_fragment");
+        Log.d(TAG, "oncreate_fragment");
     }
 
     @Override
@@ -82,24 +86,54 @@ public class PlaceholderFragment extends Fragment {
         ListView lv = (ListView) rootView.findViewById(R.id.listv);
         int id = getArguments().getInt(ARG_SECTION_NUMBER);
 
-        ll =  ((MainActivity) getActivity()).getItemDatalist();
+        itemDatalist =getItemGroup(Workout.group_uri(id));
 
-        adapter = new ListAdapter(getActivity(),ll.subList(ind1[id],ind2[id]));  ////
+
+        adapter = new ListAdapter(getActivity(),itemDatalist);
+        //adapter.notifyDataSetChanged();
 
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), DayContent.class);
-                //String str = ((TextView) view.findViewById(R.id.list_item)).getText().toString();
                 String daystr = ((TextView) view.findViewById(R.id.day)).getText().toString();
-                intent.putExtra("day", daystr);
+                Uri uri = Uri.parse(Workout.uri+"/"+daystr);
+                Cursor cursor = getContext().getContentResolver().query(uri,null,null,null,null);
+                intent.putExtra("ItemData", Workout.Cursor2Item(cursor));
+                cursor.close();
                 startActivity(intent);
-                Log.d("debug", "goto daycontent");
+                Log.d(TAG, "goto daycontent");
             }
         });
-        Log.d("debug", "oncreateview");
+        Log.d(TAG, "oncreateview"+id);
         return rootView;
     }
+
+    public List<ItemData> getItemGroup(Uri uri){
+        List<ItemData> lsd = new ArrayList<>();
+        Cursor cursor = getContext().getContentResolver().query(uri,null,null,null,null);
+        if (cursor!=null) {
+            while (cursor.moveToNext()) {
+
+               // ItemData itemData =  Workout.Cursor2Item(cursor);
+                ItemData itemData = new ItemData();
+                itemData.setId(cursor.getInt(cursor.getColumnIndex(Workout.WorkoutColumns.ID)));
+                itemData.setDay(cursor.getString(cursor.getColumnIndex(Workout.WorkoutColumns.DAYITEM)));
+                itemData.setContent(cursor.getString(cursor.getColumnIndex(Workout.WorkoutColumns.EVENT)));
+                itemData.setIscomplete(cursor.getString(cursor.getColumnIndex(Workout.WorkoutColumns.ISCOMPLETED)));
+                itemData.setTime(cursor.getString(cursor.getColumnIndex(Workout.WorkoutColumns.COMPLETE_TIME)));
+
+                lsd.add(itemData);
+            }
+            cursor.close();
+        }
+
+        return lsd;
+    }
+
+
+
+
 }
 

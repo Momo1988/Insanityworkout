@@ -1,4 +1,4 @@
-package com.example.zhangli.insanityworkout.util;
+package com.example.zhangli.insanityworkout.model;
 
 import android.app.Activity;
 
@@ -24,7 +24,8 @@ public class ActivityCollector {
         for (Activity activity : activities) {
             if (!activity.isFinishing()) {
                 activity.finish();
-            } }
+            }
+        }
     }
 
 }

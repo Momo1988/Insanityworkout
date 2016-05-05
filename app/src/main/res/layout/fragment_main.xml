@@ -5,15 +5,15 @@
     android:orientation="vertical"
     tools:context=".activity.MainActivity$PlaceholderFragment">
 
-    <include layout="@layout/tabfoot"/>
+    <include layout="@layout/tabfoot" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="400dp">
-    <ListView
-        android:id="@+id/listv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-    </ListView>
+
+        <ListView
+            android:id="@+id/listv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></ListView>
     </LinearLayout>
 </LinearLayout>

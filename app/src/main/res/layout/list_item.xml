@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="20sp"
-        android:text="0000000"
-        />
+        android:text="0000000" />
 
     <TextView
         android:id="@+id/list_item"
@@ -20,6 +19,5 @@
         android:layout_height="wrap_content"
         android:layout_weight="4"
         android:textSize="20sp"
-        android:text="1111111"
-        />
+        android:text="1111111" />
 </LinearLayout>

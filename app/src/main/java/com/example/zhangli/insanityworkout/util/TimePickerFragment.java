@@ -13,7 +13,6 @@ import android.widget.TimePicker;
 import com.example.zhangli.insanityworkout.R;
 import com.example.zhangli.insanityworkout.activity.DayContent;
 import com.example.zhangli.insanityworkout.activity.MainActivity;
-import com.example.zhangli.insanityworkout.db.InsanityDB;
 
 import java.util.Calendar;
 

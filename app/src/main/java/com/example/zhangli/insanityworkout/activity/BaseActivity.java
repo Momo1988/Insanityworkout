@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.example.zhangli.insanityworkout.util.ActivityCollector;
+import com.example.zhangli.insanityworkout.model.ActivityCollector;
 
 /**
  * Created by zhangli on 16/4/19.
@@ -21,11 +21,17 @@ public class BaseActivity extends AppCompatActivity {
         ActivityCollector.addActivity(this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("BaseActivity", getClass().getSimpleName() + "onResume");
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
+        Log.d("BaseActivity", getClass().getSimpleName() + "onDestroy");
     }
 
 
